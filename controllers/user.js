@@ -8,29 +8,29 @@ async function handleSignup(req, res) {
       email,
       password
     });
-
     if(!user){
       res.send('User already exists');
     }
-
     res.redirect('/');
   }
   catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).send("Error during signup");
+    console.error("Error in signup : ",error);
+    res.status(500).send(error.message);
   }
 }
 
 async function handleSignin(req,res){
   try{
   const {email,password} = req.body;
-  const user = await User.matchPassword(email,password);
-  console.log(user);
-  res.redirect('/');  
+  const token = await User.matchPassword(email,password);
+  console.log(token);
+  res.cookie(token,token).redirect('/'); 
   }
   catch(error){
     console.error('Error in signin : ',error.message);
-    res.status(400).send(error.message);
+    res.render('signin',{
+      error : "Incorrect Email or Password"
+    })
   }
 }
 

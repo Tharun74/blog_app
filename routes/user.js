@@ -1,5 +1,5 @@
 const express = require('express')
-const {handleSignup} = require('../controllers/user')
+const {handleSignup,handleSignin} = require('../controllers/user')
 const router = express.Router();
 
 router.get('/signin',(req,res)=>{
@@ -11,5 +11,6 @@ router.get('/signup',(req,res)=>{
 })
 
 router.post('/signup',handleSignup);
+router.post('/signin',handleSignin);
 
 module.exports = router;
